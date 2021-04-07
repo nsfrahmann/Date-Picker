@@ -11,11 +11,11 @@
 
         .label {
             font-size: 1.5rem;
-            margin-bottom: 5px;
         }
 
         select, input {
             font-size: 1.25rem;
+            max-width: 150px;
         }
 
         h1, h2 {
@@ -28,10 +28,36 @@
             color: rgba(0, 0, 0, .6);
             font-weight: 500;
             margin-top: 10px;
+            margin-bottom: 50px;
+            width: auto;
         }
 
         .select-date {
-            display: flex;
+            display: grid;
+            width: 50%;
+            margin: auto;
+            grid-column-gap: 10px;
+            grid-row-gap: 10px;
+            grid-template-columns: 33% 33% 33%;
+            grid-template-rows: auto;
+        }
+
+        .label-month {
+            grid-column-start: 1;
+            grid-column-end: 1;
+            grid-row-start: 1;
+        }
+
+        .label-day {
+            grid-column-start: 2;
+            grid-column-end: 2;
+            grid-row-start: 1;
+        }
+
+        .label-year {
+            grid-column-start: 3;
+            grid-column-end: 3;
+            grid-row-start: 1;
         }
     </style>
 
@@ -42,13 +68,13 @@
 
 
         let currentMonth = moment().month();
-
+        let currentYear = moment().year();
         
 
         window.onload = () => {
             getDayOptions();
 
-            //if (document.getElementById('select-month').children)
+            document.getElementById('select-year').setAttribute('value', currentYear)
             document.getElementById('select-day').innerHTML += `<option>${dayArray[i]}</option>`;
         }
 
@@ -56,7 +82,7 @@
             let monthArray = document.getElementById('select-month').children
             for (let i = 0; i < monthArray.length; i++) {
                 let number = parseInt(monthArray[i].value - 1, 10)
-                console.log(number)
+
                 if (number === currentMonth) {
                     monthArray[i].setAttribute('selected', 'selected');
                     break;
@@ -74,7 +100,7 @@
             document.getElementById('select-day').innerHTML = '';
 
             for (let i = 0; i < dayArray.length; i++) {    
-                document.getElementById('select-day').innerHTML += `<option>${dayArray[i]}</option>`;
+                document.getElementById('select-day').innerHTML += `<option value="${dayArray[i]}">${dayArray[i]}</option>`;
             }
         }     
     </script>
@@ -84,7 +110,7 @@
     <h1>Date Calculator</h1>
     <h2>See how far away your date is from the target date</h2>
     <div class="select-date">
-        <div class="label">Month</div>
+        <div class="label label-month">Month</div>
         <select onclick="getDayOptions()" id="select-month">
             <option value="01">January</option>
             <option value="02">February</option>
@@ -99,10 +125,10 @@
             <option value="11">November</option>
             <option value="12">December</option>
         </select>
-        <div class="label">Day</div>
+        <div class="label label-day">Day</div>
         <select onclick="getDayOptions()" id="select-day"></select>
-        <div class="label">Year</div>
-        <input id="select-year" value="2021" />
+        <div class="label label-year">Year</div>
+        <input id="select-year" />
     </div>
     
 </body>
