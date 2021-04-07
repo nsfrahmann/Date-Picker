@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <style>
+        body {
+            background-color: rgba(0, 0, 0, .1)
+        }
+
+        .label {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        select, input {
+            font-size: 1.25rem;
+        }
+
+        h1, h2 {
+            margin: auto;
+            width: 50%;
+            text-align: center;
+        }
+
+        h2 {
+            color: rgba(0, 0, 0, .6);
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        .select-date {
+            display: flex;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+
+    <script>
+
+
+
+        let currentMonth = moment().month();
+
+        
+
+        window.onload = () => {
+            getDayOptions();
+
+            //if (document.getElementById('select-month').children)
+            document.getElementById('select-day').innerHTML += `<option>${dayArray[i]}</option>`;
+        }
+
+        function getDayOptions() {
+            let monthArray = document.getElementById('select-month').children
+            for (let i = 0; i < monthArray.length; i++) {
+                let number = parseInt(monthArray[i].value - 1, 10)
+                console.log(number)
+                if (number === currentMonth) {
+                    monthArray[i].setAttribute('selected', 'selected');
+                    break;
+                }
+            }
+
+            HTMLSelectElement = document.querySelector('#select-month');
+            let monthInput = HTMLSelectElement.value;
+
+            HTMLSelectElement = document.querySelector('#select-year');
+            let yearInput = HTMLSelectElement.value;
+
+            let dayArray = Array.from(Array(moment(`${yearInput}-${monthInput}`).daysInMonth()), (_, i) => i + 1)
+
+            document.getElementById('select-day').innerHTML = '';
+
+            for (let i = 0; i < dayArray.length; i++) {    
+                document.getElementById('select-day').innerHTML += `<option>${dayArray[i]}</option>`;
+            }
+        }     
+    </script>
+
+</head>
+<body>
+    <h1>Date Calculator</h1>
+    <h2>See how far away your date is from the target date</h2>
+    <div class="select-date">
+        <div class="label">Month</div>
+        <select onclick="getDayOptions()" id="select-month">
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+        </select>
+        <div class="label">Day</div>
+        <select onclick="getDayOptions()" id="select-day"></select>
+        <div class="label">Year</div>
+        <input id="select-year" value="2021" />
+    </div>
+    
+</body>
+</html>
