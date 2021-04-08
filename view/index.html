@@ -18,6 +18,10 @@
             max-width: 150px;
         }
 
+        option {
+            font-size: 1rem;
+        }
+
         h1, h2 {
             margin: auto;
             width: 50%;
@@ -34,30 +38,50 @@
 
         .select-date {
             display: grid;
-            width: 50%;
+            width: 70%;
             margin: auto;
+            margin-bottom: 30px;
             grid-column-gap: 10px;
             grid-row-gap: 10px;
-            grid-template-columns: 33% 33% 33%;
+            grid-template-columns: 25% 25% 25% 25%;
             grid-template-rows: auto;
         }
 
-        .label-month {
+        .empty {
             grid-column-start: 1;
             grid-column-end: 1;
             grid-row-start: 1;
         }
 
-        .label-day {
+        .label-month {
             grid-column-start: 2;
             grid-column-end: 2;
             grid-row-start: 1;
         }
 
-        .label-year {
+        .label-day {
             grid-column-start: 3;
             grid-column-end: 3;
             grid-row-start: 1;
+        }
+
+        .label-year {
+            grid-column-start: 4;
+            grid-column-end: 4;
+            grid-row-start: 1;
+        }
+
+        .label-date {
+            grid-column-start: 1;
+            grid-column-end: 1;
+            grid-row-start: 2;
+            margin-top: -20px;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .hide {
+            display: none;
         }
     </style>
 
@@ -67,42 +91,109 @@
 
 
 
-        let currentMonth = moment().month();
+        let currentMonth = moment().format('MM');
+        let currentDay = moment().format('DD');
         let currentYear = moment().year();
-        
+        let month1
+        let month2
+        let day1
+        let day2
+        let year1
+        let year2
+
+        let date1
+        let date2
+        let result
+        let response
 
         window.onload = () => {
-            getDayOptions();
+            getDayOptions1();
+            getDayOptions2();
+            getCurrentMonth1();
+            getCurrentMonth2();
 
-            document.getElementById('select-year').setAttribute('value', currentYear)
-            document.getElementById('select-day').innerHTML += `<option>${dayArray[i]}</option>`;
+            date1 = moment(`${currentMonth}/${currentDay}/${currentYear}`)
+            date2 = moment(`${currentMonth}/${currentDay}/${currentYear}`)
+            result = moment(date2).diff(moment(date1), 'days')
+
+            switch (result) {
+                case result = 0:
+                    response = `You're living in the here and now baby.`;
+                    break;
+                case result > 0:
+                    response = `${date2} is ${result} days from now.`;
+                    break;
+                case result < 0:
+                    response = `${date2} was ${result * -1} days ago.`;
+            }
+
+            document.getElementById('result').innerHTML = response;
+
+            document.getElementById('select-year-1').setAttribute('value', currentYear);
+            document.getElementById('select-year-2').setAttribute('value', currentYear);
+            document.getElementById('select-day-1').innerHTML += `<option value="${dayArray[i]}">${dayArray[i]}</option>`;
+            document.getElementById('select-day-1').innerHTML += `<option value="${dayArray[i]}">${dayArray[i]}</option>`;
         }
 
-        function getDayOptions() {
-            let monthArray = document.getElementById('select-month').children
+        function getCurrentMonth1() {
+            let monthArray = document.getElementById('select-month-1').children;
             for (let i = 0; i < monthArray.length; i++) {
-                let number = parseInt(monthArray[i].value - 1, 10)
+                let number = monthArray[i].value;
 
                 if (number === currentMonth) {
                     monthArray[i].setAttribute('selected', 'selected');
+                    month1 = number;
                     break;
                 }
             }
+        }
 
-            HTMLSelectElement = document.querySelector('#select-month');
-            let monthInput = HTMLSelectElement.value;
+        function getCurrentMonth2() {
+            let monthArray = document.getElementById('select-month-2').children
+            for (let i = 0; i < monthArray.length; i++) {
+                let number = monthArray[i].value;
 
-            HTMLSelectElement = document.querySelector('#select-year');
-            let yearInput = HTMLSelectElement.value;
-
-            let dayArray = Array.from(Array(moment(`${yearInput}-${monthInput}`).daysInMonth()), (_, i) => i + 1)
-
-            document.getElementById('select-day').innerHTML = '';
-
-            for (let i = 0; i < dayArray.length; i++) {    
-                document.getElementById('select-day').innerHTML += `<option value="${dayArray[i]}">${dayArray[i]}</option>`;
+                if (number === currentMonth) {
+                    monthArray[i].setAttribute('selected', 'selected');
+                    month2 = number;
+                    break;
+                }
             }
-        }     
+        }
+
+        function getDayOptions1() {
+
+            HTMLSelectElement = document.querySelector('#select-month-1');
+            let monthInput1 = HTMLSelectElement.value;
+
+            HTMLSelectElement = document.querySelector('#select-year-1');
+            let yearInput1 = HTMLSelectElement.value;
+
+            let dayArray = Array.from(Array(moment(`${yearInput1}-${monthInput1}`).daysInMonth()), (_, i) => i + 1)
+
+            document.getElementById('select-day-1').innerHTML = '';
+
+            for (let i = 0; i < dayArray.length; i++) {
+                document.getElementById('select-day-1').innerHTML += `<option value="${dayArray[i]}">${dayArray[i]}</option>`;
+            }
+        }
+
+        function getDayOptions2() {
+
+            HTMLSelectElement = document.querySelector('#select-month-2');
+            let monthInput2 = HTMLSelectElement.value;
+
+            HTMLSelectElement = document.querySelector('#select-year-2');
+            let yearInput2 = HTMLSelectElement.value;
+
+            let dayArray = Array.from(Array(moment(`${yearInput2}-${monthInput2}`).daysInMonth()), (_, i) => i + 1)
+
+            document.getElementById('select-day-2').innerHTML = '';
+
+            for (let i = 0; i < dayArray.length; i++) {
+                document.getElementById('select-day-2').innerHTML += `<option value="${dayArray[i]}">${dayArray[i]}</option>`;
+            }
+        }
     </script>
 
 </head>
@@ -110,8 +201,10 @@
     <h1>Date Calculator</h1>
     <h2>See how far away your date is from the target date</h2>
     <div class="select-date">
+        <div class="label label-date">Starting Date</div>
+        <div class="empty"></div>
         <div class="label label-month">Month</div>
-        <select onclick="getDayOptions()" id="select-month">
+        <select onclick="getDayOptions1()" id="select-month-1">
             <option value="01">January</option>
             <option value="02">February</option>
             <option value="03">March</option>
@@ -126,10 +219,35 @@
             <option value="12">December</option>
         </select>
         <div class="label label-day">Day</div>
-        <select onclick="getDayOptions()" id="select-day"></select>
+        <select id="select-day-1"></select>
         <div class="label label-year">Year</div>
-        <input id="select-year" />
+        <input onchange="getDayOptions1()" id="select-year-1" />
     </div>
-    
+
+    <div class="select-date">
+        <div class="label label-date">Target Date</div>
+        <div class="empty"></div>
+        <div class="label label-month">Month</div>
+        <select onclick="getDayOptions2()" id="select-month-2">
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+        </select>
+        <div class="label label-day">Day</div>
+        <select id="select-day-2"></select>
+        <div class="label label-year">Year</div>
+        <input onchange="getDayOptions2()" id="select-year-2" />
+    </div>
+    <h2 id="result"></h2>
+
 </body>
 </html>
