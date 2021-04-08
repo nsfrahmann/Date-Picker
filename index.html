@@ -2,13 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Date Wizard</title>
 
     <link href="../css/main.css" rel="stylesheet" />
 
 </head>
 <body>
-    <h1>Date Calculator</h1>
+    <h1>Date Wizard</h1>
     <h2>See how far away your date is from the target date</h2>
     <div class="select-date">
         <div class="label label-date">Start Date</div>
@@ -31,7 +31,7 @@
         <div class="label label-day">Day</div>
         <select id="select-day-1"></select>
         <div class="label label-year">Year</div>
-        <input id="select-year-1" />
+        <input id="select-year-1" type="number" maxlength="4"/>
     </div>
 
     <div class="select-date">
@@ -55,7 +55,7 @@
         <div class="label label-day">Day</div>
         <select id="select-day-2"></select>
         <div class="label label-year">Year</div>
-        <input id="select-year-2" />
+        <input id="select-year-2" maxlength="4" />
     </div>
     <h2 id="result"></h2>
 

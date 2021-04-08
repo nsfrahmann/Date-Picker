@@ -42,6 +42,7 @@ document.getElementById('select-month-2').addEventListener('click', getDayOption
 document.getElementById('select-year-1').addEventListener('change', getDayOptions1)
 document.getElementById('select-year-2').addEventListener('change', getDayOptions2)
 
+
 function getMonth1() {
     let monthArray = document.getElementById('select-month-1').children;
 
@@ -105,11 +106,8 @@ function getYear2() {
 
 function getDayOptions1() {
 
-    HTMLSelectElement = document.querySelector('#select-month-1');
-    let monthInput1 = HTMLSelectElement.value;
-
-    HTMLSelectElement = document.querySelector('#select-year-1');
-    let yearInput1 = HTMLSelectElement.value;
+    let monthInput1 = document.getElementById('select-month-1').value;
+    let yearInput1 = document.getElementById('select-year-1').value;
 
     dayArray1 = Array.from(Array(moment(`${yearInput1}-${monthInput1}`).daysInMonth()), (_, i) => i + 1)
 
@@ -141,11 +139,8 @@ function getDayOptions1() {
 
 function getDayOptions2() {
 
-    HTMLSelectElement = document.querySelector('#select-month-2');
-    let monthInput2 = HTMLSelectElement.value;
-
-    HTMLSelectElement = document.querySelector('#select-year-2');
-    let yearInput2 = HTMLSelectElement.value;
+    let monthInput2 = document.getElementById('select-month-2').value;
+    let yearInput2 = document.getElementById('select-year-2').value;
 
     dayArray2 = Array.from(Array(moment(`${yearInput2}-${monthInput2}`).daysInMonth()), (_, i) => i + 1)
 
@@ -176,6 +171,7 @@ function getDayOptions2() {
 }
 
 function getResult() {
+
     month1 = document.getElementById('select-month-1').value;
     day1 = document.getElementById('select-day-1').value;
     year1 = document.getElementById('select-year-1').value;
