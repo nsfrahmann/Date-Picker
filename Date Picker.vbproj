@@ -96,7 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\main.css" />
-    <Content Include="js\main.js" />
+    <Content Include="js\app.js" />
     <Content Include="index.html" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -130,10 +130,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Dockerfile" />
-    <None Include=".dockerignore">
-      <DependentUpon>Dockerfile</DependentUpon>
-    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
