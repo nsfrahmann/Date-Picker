@@ -104,6 +104,7 @@
         let dayArray1
         let dayArray2
         let i
+        let number
 
         let date1
         let date2
@@ -111,22 +112,16 @@
         let result
         let response
 
-        let displayDate2
-
 
         window.onload = () => {
 
             getDayOptions1();
             getDayOptions2();
-            getCurrentMonth1();
-            getCurrentMonth2();
-            getResult();
-
-            document.getElementById('test').innerHTML = localStorage.getItem('first-date')
-            document.getElementById('test1').innerHTML = localStorage.getItem('second-date')
-
-            document.getElementById('select-year-1').setAttribute('value', currentYear);
-            document.getElementById('select-year-2').setAttribute('value', currentYear);            
+            getMonth1();
+            getMonth2();
+            getYear1();
+            getYear2();
+            getResult();         
         }
 
         window.onchange = () => {
@@ -134,69 +129,64 @@
             persistData();
         }
 
-        function getCurrentMonth1() {
+        function getMonth1() {
             let monthArray = document.getElementById('select-month-1').children;
+
             for (let i = 0; i < monthArray.length; i++) {
-                let number = monthArray[i].value;
-
                 if (localStorage.getItem('first-date') != null) {
-
                     let parts = localStorage.getItem('first-date').split('/');
 
-                    let monthArray = document.getElementById('select-month-1').children;
-
-                    for (let i = 0; i < monthArray.length; i++) {
-                        let number = monthArray[i].value;
-
-                        if (number == parts[0]) {
-                            console.log(number);
-                            console.log(parts[0]);
-                            monthArray[i].setAttribute('selected', 'selected');
-                            month1 = number;
-                            break;
-                        }
+                    if (monthArray[i].value == parts[0]) {
+                        monthArray[i].setAttribute('selected', 'selected');
+                        month1 = parts[0];
+                        break;
                     }
                 }
                 else if (monthArray[i].value == currentMonth) {
                     monthArray[i].setAttribute('selected', 'selected');
-                    month1 = number;
-                }
-                else {
-                    console.error('Error processing first date')
+                    month1 = currentMonth;
+                    break;
                 }
             }
         }
 
-        function getCurrentMonth2() {
-            let monthArray = document.getElementById('select-month-2').children
+        function getMonth2() {
+            let monthArray = document.getElementById('select-month-2').children;
             for (let i = 0; i < monthArray.length; i++) {
-                let number = monthArray[i].value;
-
                 if (localStorage.getItem('second-date') != null) {
-
                     let parts = localStorage.getItem('second-date').split('/');
 
-                    let monthArray = document.getElementById('select-month-2').children;
-
-                    for (let i = 0; i < monthArray.length; i++) {
-                        let number = monthArray[i].value;
-
-                        if (number == parts[0]) {
-                            console.log(number);
-                            console.log(parts[0]);
-                            monthArray[i].setAttribute('selected', 'selected');
-                            month2 = number;
-                            break;
-                        }
+                    if (monthArray[i].value == parts[0]) {
+                        monthArray[i].setAttribute('selected', 'selected');
+                        month2 = parts[0];
+                        break;
                     }
                 }
                 else if (monthArray[i].value == currentMonth) {
                     monthArray[i].setAttribute('selected', 'selected');
-                    month2 = number;
+                    month2 = currentMonth;
+                    break;
                 }
-                else {
-                    console.error('Error processing second date')
-                }
+            }
+        }
+
+        function getYear1() {
+            if (localStorage.getItem('first-date') != null) {
+                let parts = localStorage.getItem('first-date').split('/');
+                document.getElementById('select-year-1').setAttribute('value', parts[2]);
+            }
+            else {
+                document.getElementById('select-year-1').setAttribute('value', currentYear);
+            }
+        }
+
+        function getYear2() {
+            if (localStorage.getItem('second-date') != null) {
+                let parts = localStorage.getItem('second-date').split('/');
+                document.getElementById('select-year-2').setAttribute('value', parts[2]);
+            }
+            else {
+                document.getElementById('select-year-2').setAttribute('value', currentYear);
             }
         }
 
@@ -217,9 +207,20 @@
             }
 
             let dayOptionArray1 = document.getElementById('select-day-1').children
+            
+
             for (let i = 0; i < dayOptionArray1.length; i++) {
-                let number = dayOptionArray1[i].value;
-                if (number == parseInt(currentDay, 10)) {
+                if (localStorage.getItem('first-date') != null) {
+                    let parts = localStorage.getItem('first-date').split('/');
+
+                    if (dayOptionArray1[i].value == parseInt(parts[1], 10)) {
+                        dayOptionArray1[i].setAttribute('selected', 'selected');
+                        day1 = number;
+                        break;
+                    }
+                }
+                else if (dayOptionArray1[i].value == parseInt(currentDay, 10)) {
+                    console.log(test);
                     dayOptionArray1[i].setAttribute('selected', 'selected');
                     day1 = number;
                     break;
@@ -242,10 +243,20 @@
             for (let i = 0; i < dayArray2.length; i++) {
                 document.getElementById('select-day-2').innerHTML += `<option value="${dayArray2[i]}">${dayArray2[i]}</option>`;
             }
+
             let dayOptionArray2 = document.getElementById('select-day-2').children
+
             for (let i = 0; i < dayOptionArray2.length; i++) {
-                let number = dayOptionArray2[i].value;
-                if (number == parseInt(currentDay, 10)) {
+                if (localStorage.getItem('second-date') != null) {
+                    let parts = localStorage.getItem('second-date').split('/');
+
+                    if (dayOptionArray2[i].value == parseInt(parts[1], 10)) {
+                        dayOptionArray2[i].setAttribute('selected', 'selected');
+                        day2 = number;
+                        break;
+                    }
+                }
+                else if (dayOptionArray2[i].value == parseInt(currentDay, 10)) {
                     dayOptionArray2[i].setAttribute('selected', 'selected');
                     day2 = number;
                     break;
@@ -342,8 +353,6 @@
         <input onchange="getDayOptions2()" id="select-year-2" />
     </div>
     <h2 id="result"></h2>
-    <h1 id="test"></h1>
-    <h1 id="test1"></h1>
 
 </body>
 </html>
