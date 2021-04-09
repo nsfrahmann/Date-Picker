@@ -18,6 +18,12 @@ let date2
 
 let result
 let response
+if (localStorage.getItem('format') != null) {
+    var format = document.querySelector(`#${localStorage.getItem('format')}`)
+}
+else {
+    format = document.getElementById('days')
+}
 
 
 window.onload = () => {
@@ -27,11 +33,11 @@ window.onload = () => {
     getMonth2();
     getYear1();
     getYear2();
-    getResult();
+    getResult(format);
 }
 
 window.onchange = () => {
-    getResult();
+    getResult(format);
     persistData();
 }
 
@@ -42,6 +48,15 @@ document.getElementById('select-month-2').addEventListener('click', getDayOption
 document.getElementById('select-year-1').addEventListener('change', getDayOptions1)
 document.getElementById('select-year-2').addEventListener('change', getDayOptions2)
 
+//regular expression preventing non-numeric input
+document.getElementById('select-year-1').addEventListener('keydown', regEx)
+document.getElementById('select-year-2').addEventListener('keydown', regEx)
+
+function regEx (evt) {
+    if (evt.which < 48 || evt.which > 57) {
+        evt.preventDefault();
+    }
+}
 
 function getMonth1() {
     let monthArray = document.getElementById('select-month-1').children;
@@ -170,7 +185,7 @@ function getDayOptions2() {
     }
 }
 
-function getResult() {
+function getResult(format) {
 
     month1 = document.getElementById('select-month-1').value;
     day1 = document.getElementById('select-day-1').value;
@@ -182,7 +197,22 @@ function getResult() {
     year2 = document.getElementById('select-year-2').value;
     date2 = moment(`${month2}/${day2}/${year2}`);
 
-    result = moment(date2).diff(moment(date1), 'days');
+    if (localStorage.getItem('response') != null) {
+        result = localStorage.getItem('response');
+    }
+    else if (format.value == 'days') {
+        format.value = 'days';
+        result = moment(date2).diff(moment(date1), 'd');
+    }
+    else if (format.value == 'seconds') {
+        result = moment(date2).diff(moment(date1), 's');
+    }
+    else if (format.value == 'minutes') {
+        result = moment(date2).diff(moment(date1), 'm');
+    }
+    else if (format.value == 'hours') {
+        result = moment(date2).diff(moment(date1), 'h');
+    }
 
     let displayDate1 = moment(date1).format('MM/DD/YYYY')
     let displayDate2 = moment(date2).format('MM/DD/YYYY')
@@ -193,13 +223,16 @@ function getResult() {
             document.getElementById('result').innerHTML = response;
             break;
         case (result > 0):
-            response = `On this lovely date of ${displayDate1},\ <br></br> \ ${displayDate2} is ${result} days from now.`;
+            response = `On this lovely date of ${displayDate1},\ <br></br> \ ${displayDate2} is ${result} ${format.value} from now.`;
             document.getElementById('result').innerHTML = response;
             break;
         case (result < 0):
-            response = `On this lovely date of ${displayDate1},\ <br></br> \ ${displayDate2} was ${result * -1} days ago.`;
+            response = `On this lovely date of ${displayDate1},\ <br></br> \ ${displayDate2} was ${result * -1} ${format.value} ago.`;
             document.getElementById('result').innerHTML = response;
     }
+
+    localStorage.setItem('result', result);
+    localStorage.setItem('format', format.value);
 }
 
 function persistData() {

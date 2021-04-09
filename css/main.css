@@ -29,7 +29,7 @@ h2 {
     width: auto;
 }
 
-.select-date {
+.select-date, .button-group {
     display: grid;
     width: 70%;
     margin: auto;

@@ -31,7 +31,7 @@
         <div class="label label-day">Day</div>
         <select id="select-day-1"></select>
         <div class="label label-year">Year</div>
-        <input id="select-year-1" type="number" maxlength="4"/>
+        <input id="select-year-1" maxlength="4"/>
     </div>
 
     <div class="select-date">
@@ -56,6 +56,12 @@
         <select id="select-day-2"></select>
         <div class="label label-year">Year</div>
         <input id="select-year-2" maxlength="4" />
+    </div>
+    <div class="button-group">
+        <button onclick="getResult(this)" data-format="seconds" value="seconds" id="seconds">Seconds</button>
+        <button onclick="getResult(this)" data-format="minutes" value="minutes" id="minutes">Minutes</button>
+        <button onclick="getResult(this)" data-format="hours" value="hours" id="hours">Hours</button>
+        <button onclick="getResult(this)" data-format="days" value="days" id="days">Days</button>
     </div>
     <h2 id="result"></h2>
 
