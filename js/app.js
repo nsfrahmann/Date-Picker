@@ -17,7 +17,9 @@ let date1
 let date2
 
 let result
+let comresult
 let response
+
 if (localStorage.getItem('format') != null) {
     var format = document.querySelector(`#${localStorage.getItem('format')}`)
 }
@@ -37,8 +39,11 @@ window.onload = () => {
 }
 
 window.onchange = () => {
-    getResult(format);
-    persistData();
+    loading();
+
+    //Uncomment if loading is annoying
+    //getResult(format);
+    //persistData();
 }
 
 document.getElementById('select-month-1').addEventListener('click', getDayOptions1)
@@ -56,6 +61,18 @@ function regEx (evt) {
     if (evt.which < 48 || evt.which > 57) {
         evt.preventDefault();
     }
+}
+
+function addCommas() {
+    
+    if (result === null) return;
+    result = (result.toString().split('')
+        .reverse()
+        .map((digit, index) => index != 0 && index % 3 === 0 ? `${digit},` : digit)
+        .reverse()
+        .join(''));
+
+    return result;
 }
 
 function getMonth1() {
@@ -223,11 +240,13 @@ function getResult(format) {
             document.getElementById('result').innerHTML = response;
             break;
         case (result > 0):
-            response = `On this lovely date of ${displayDate1},\ <br></br> \ ${displayDate2} is ${result} ${format.value} from now.`;
+            addCommas();
+            response = `On this lovely date of ${displayDate1},\ <br><br> \ ${displayDate2} is ${result} ${format.value} from now.`;
             document.getElementById('result').innerHTML = response;
             break;
         case (result < 0):
-            response = `On this lovely date of ${displayDate1},\ <br></br> \ ${displayDate2} was ${result * -1} ${format.value} ago.`;
+            addCommas();
+            response = `On this lovely date of ${displayDate1},\ <br><br> \ ${displayDate2} was ${result * -1} ${format.value} ago.`;
             document.getElementById('result').innerHTML = response;
     }
 
@@ -239,4 +258,49 @@ function persistData() {
     localStorage.clear()
     localStorage.setItem('first-date', moment(date1).format('MM/DD/YYYY'));
     localStorage.setItem('second-date', moment(date2).format('MM/DD/YYYY'));
+}
+
+function loading() {
+    var num = 1;
+    for (i = 1; i <= 88; i++) {
+        document.getElementById('result').outerHTML = '<h2 class="hide" id="result"></h2>';
+        document.getElementById('Marty').outerHTML = '<h2 id="Marty"></h2>';
+        document.getElementById('Marty').innerHTML = 'Marty, floor it!';
+        document.getElementById('mph').outerHTML = '<h3 id="mph"></h3>';
+
+        var style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = `#mph::after { background-image: url(/img/delorean2.gif)\ ; \
+                                            transform: rotateY(180deg)\ ; \
+                                            margin-top: -55px\ ; \
+                                            margin-left: 70px\ ; \
+                                            border-radius: 50%\ ; \
+                                            width: 100px\ ; \
+                                            height: 100px\ ; \
+                                            display: inline-block\ ; \
+                                            background-size: 100px 100px\ ; \
+                                            content: "" }`;
+        document.getElementsByTagName('head')[0].appendChild(style);
+
+        setTimeout(() => {
+            document.getElementById('mph').innerHTML = num + ' ' + 'mph';
+            num++;
+            if (num == 88) {
+                document.getElementById('Marty').innerHTML = 'Great Scott!';
+                document.getElementById('mph').outerHTML = '<h3 class="hide" id="mph"></h3>';
+                setTimeout(function () {
+                    getResult(format);
+                    persistData();
+                }, 500)
+            }
+            
+        }, i * (100 - (.6 * i)));
+        
+        setTimeout(function () {
+            document.getElementById('Marty').outerHTML = '<h2 class="hide" id="Marty"></h2>';
+        }, 4500)
+    };
+    console.log(i * (100 - (.6 * i)))
+    document.getElementById('result').removeAttribute('class', 'hide');
+
 }

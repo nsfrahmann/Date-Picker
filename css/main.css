@@ -2,10 +2,6 @@
     background-color: rgba(0, 0, 0, .1)
 }
 
-.label {
-    font-size: 1.5rem;
-}
-
 select, input {
     font-size: 1.25rem;
     max-width: 150px;
@@ -15,18 +11,43 @@ option {
     font-size: 1rem;
 }
 
-h1, h2 {
+h1, h2, h3 {
     margin: auto;
     width: 50%;
     text-align: center;
 }
 
-h2 {
+h2, h3 {
     color: rgba(0, 0, 0, .6);
     font-weight: 500;
     margin-top: 10px;
     margin-bottom: 50px;
     width: auto;
+}
+
+h3 {
+    margin-top: -30px !important;
+}
+
+#mph {
+    margin-left: 175px;
+}
+
+/*#mph::after {
+    background-image: url(/img/delorean2.gif);
+    transform: rotateY(180deg);
+    margin-top: -55px;
+    margin-left: 70px;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    background-size: 100px 100px;
+    content: '';
+}*/
+
+.label {
+    font-size: 1.5rem;
 }
 
 .select-date, .button-group {
@@ -71,4 +92,8 @@ h2 {
     margin-top: -15px;
     font-size: 1.75rem;
     font-weight: 700;
+}
+
+.hide {
+    display:none;
 }
