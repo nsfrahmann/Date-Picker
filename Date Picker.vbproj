@@ -96,10 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\main.css" />
-    <Content Include="img\delorean2.gif" />
+    <Content Include="img\delorean.gif" />
     <Content Include="js\app.js" />
     <Content Include="index.html" />
-    <Content Include="img\delorean.gif" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

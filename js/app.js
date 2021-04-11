@@ -17,8 +17,10 @@ let date1
 let date2
 
 let result
-let comresult
 let response
+
+let monthSelect1 = document.getElementById('select-month-1')
+let monthSelect2 = document.getElementById('select-month-2')
 
 if (localStorage.getItem('format') != null) {
     var format = document.querySelector(`#${localStorage.getItem('format')}`)
@@ -46,8 +48,8 @@ window.onchange = () => {
     //persistData();
 }
 
-document.getElementById('select-month-1').addEventListener('click', getDayOptions1)
-document.getElementById('select-month-2').addEventListener('click', getDayOptions2)
+monthSelect1.addEventListener('click', getDayOptions1)
+monthSelect2.addEventListener('click', getDayOptions2)
 
 //This is to handle the leap year case
 document.getElementById('select-year-1').addEventListener('change', getDayOptions1)
@@ -58,19 +60,31 @@ document.getElementById('select-year-1').addEventListener('keydown', regEx)
 document.getElementById('select-year-2').addEventListener('keydown', regEx)
 
 function regEx (evt) {
-    if (evt.which < 48 || evt.which > 57) {
+    if (evt.which < 48 && evt.which != 8 || evt.which > 57) {
         evt.preventDefault();
     }
 }
 
 function addCommas() {
     
-    if (result === null) return;
-    result = (result.toString().split('')
-        .reverse()
-        .map((digit, index) => index != 0 && index % 3 === 0 ? `${digit},` : digit)
-        .reverse()
-        .join(''));
+    if (result === null) {
+        return;
+    }
+    else if (result < 0 ) {
+        result = ((result * -1).toString().split('')
+            .reverse()
+            .map((digit, index) => index != 0 && index % 3 === 0 ? `${digit},` : digit)
+            .reverse()
+            .join(''));
+    }
+    else {
+        result = (result.toString().split('')
+            .reverse()
+            .map((digit, index) => index != 0 && index % 3 === 0 ? `${digit},` : digit)
+            .reverse()
+            .join(''));
+    }
+    
 
     return result;
 }
@@ -214,11 +228,7 @@ function getResult(format) {
     year2 = document.getElementById('select-year-2').value;
     date2 = moment(`${month2}/${day2}/${year2}`);
 
-    if (localStorage.getItem('response') != null) {
-        result = localStorage.getItem('response');
-    }
-    else if (format.value == 'days') {
-        format.value = 'days';
+    if (format.value == 'days') {
         result = moment(date2).diff(moment(date1), 'd');
     }
     else if (format.value == 'seconds') {
@@ -246,7 +256,7 @@ function getResult(format) {
             break;
         case (result < 0):
             addCommas();
-            response = `On this lovely date of ${displayDate1},\ <br><br> \ ${displayDate2} was ${result * -1} ${format.value} ago.`;
+            response = `On this lovely date of ${displayDate1},\ <br><br> \ ${displayDate2} was ${result} ${format.value} ago.`;
             document.getElementById('result').innerHTML = response;
     }
 
@@ -261,8 +271,22 @@ function persistData() {
 }
 
 function loading() {
-    var num = 1;
+
+    getResult(format);
+    persistData();
+
+    if (document.getElementById('mph').innerHTML.length != 0) {
+        return;
+    }
+
+    let num = 1;
     for (i = 1; i <= 88; i++) {
+
+        document.getElementById('seconds').setAttribute('disabled', 'disabled');
+        document.getElementById('minutes').setAttribute('disabled', 'disabled');
+        document.getElementById('hours').setAttribute('disabled', 'disabled');
+        document.getElementById('days').setAttribute('disabled', 'disabled');
+
         document.getElementById('result').outerHTML = '<h2 class="hide" id="result"></h2>';
         document.getElementById('Marty').outerHTML = '<h2 id="Marty"></h2>';
         document.getElementById('Marty').innerHTML = 'Marty, floor it!';
@@ -270,37 +294,38 @@ function loading() {
 
         var style = document.createElement('style');
         style.type = 'text/css';
-        style.innerHTML = `#mph::after { background-image: url(/img/delorean2.gif)\ ; \
+        style.innerHTML = `#mph::after { background-image: url(/img/delorean.gif)\ ; \
                                             transform: rotateY(180deg)\ ; \
                                             margin-top: -55px\ ; \
                                             margin-left: 70px\ ; \
                                             border-radius: 50%\ ; \
-                                            width: 100px\ ; \
-                                            height: 100px\ ; \
+                                            width: 115px\ ; \
+                                            height: 115px\ ; \
                                             display: inline-block\ ; \
-                                            background-size: 100px 100px\ ; \
+                                            background-size: 115px 115px\ ; \
                                             content: "" }`;
         document.getElementsByTagName('head')[0].appendChild(style);
 
-        setTimeout(() => {
+        x = (setTimeout(() => {
             document.getElementById('mph').innerHTML = num + ' ' + 'mph';
             num++;
             if (num == 88) {
                 document.getElementById('Marty').innerHTML = 'Great Scott!';
                 document.getElementById('mph').outerHTML = '<h3 class="hide" id="mph"></h3>';
-                setTimeout(function () {
-                    getResult(format);
-                    persistData();
+
+                document.getElementById('seconds').removeAttribute('disabled', 'disabled');
+                document.getElementById('minutes').removeAttribute('disabled', 'disabled');
+                document.getElementById('hours').removeAttribute('disabled', 'disabled');
+                document.getElementById('days').removeAttribute('disabled', 'disabled');
+
+                setTimeout(() => {
+                    document.getElementById('Marty').outerHTML = '<h2 class="hide" id="Marty"></h2>';
+                    document.getElementById('result').removeAttribute('class', 'hide');
+                    document.getElementById('result').innerHTML = response;
+                    document.getElementById('mph').innerHTML = '';
                 }, 500)
             }
             
-        }, i * (100 - (.6 * i)));
-        
-        setTimeout(function () {
-            document.getElementById('Marty').outerHTML = '<h2 class="hide" id="Marty"></h2>';
-        }, 4500)
-    };
-    console.log(i * (100 - (.6 * i)))
-    document.getElementById('result').removeAttribute('class', 'hide');
-
+        }, i * (100 - (.6 * i))) )
+    }
 }

@@ -13,7 +13,7 @@
         <div class="label label-date">Start Date</div>
         <div class="empty"></div>
         <div class="label label-month">Month</div>
-        <select id="select-month-1">
+        <select onchange="loading(this)" id="select-month-1">
             <option value="01">January</option>
             <option value="02">February</option>
             <option value="03">March</option>
@@ -28,16 +28,16 @@
             <option value="12">December</option>
         </select>
         <div class="label label-day">Day</div>
-        <select id="select-day-1"></select>
+        <select onchange="loading(this)" id="select-day-1"></select>
         <div class="label label-year">Year</div>
-        <input id="select-year-1" maxlength="4" />
+        <input onchange="loading(this)" id="select-year-1" maxlength="4" />
     </div>
 
     <div class="select-date">
         <div class="label label-date">Target Date</div>
         <div class="empty"></div>
         <div class="label label-month">Month</div>
-        <select id="select-month-2">
+        <select onchange="loading(this)" id="select-month-2">
             <option value="01">January</option>
             <option value="02">February</option>
             <option value="03">March</option>
@@ -52,20 +52,19 @@
             <option value="12">December</option>
         </select>
         <div class="label label-day">Day</div>
-        <select id="select-day-2"></select>
+        <select onchange="loading(this)" id="select-day-2"></select>
         <div class="label label-year">Year</div>
-        <input id="select-year-2" maxlength="4" />
+        <input onchange="loading(this)" id="select-year-2" maxlength="4" />
     </div>
     <div class="button-group">
-        <button onclick="getResult(this)" data-format="seconds" value="seconds" id="seconds">Seconds</button>
-        <button onclick="getResult(this)" data-format="minutes" value="minutes" id="minutes">Minutes</button>
-        <button onclick="getResult(this)" data-format="hours" value="hours" id="hours">Hours</button>
-        <button onclick="getResult(this)" data-format="days" value="days" id="days">Days</button>
+        <button onclick="getResult(this)" value="seconds" id="seconds">Seconds</button>
+        <button onclick="getResult(this)" value="minutes" id="minutes">Minutes</button>
+        <button onclick="getResult(this)" value="hours" id="hours">Hours</button>
+        <button onclick="getResult(this)" value="days" id="days">Days</button>
     </div>
     <h2 id="result"></h2>
     <h2 id="Marty"></h2>
     <h3 id="mph"></h3>
-    <!--<img class="hide" id="gif" src="../img/delorean2.gif" />--> 
 
 
 
