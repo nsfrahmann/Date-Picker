@@ -1,5 +1,12 @@
-﻿body {
-    background-color: rgba(0, 0, 0, .1)
+﻿html{
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    overflow: hidden;
+    background-image: url('../img/futurelandscape.jpg');
+    background-size: cover;
 }
 
 select, input {
@@ -12,21 +19,43 @@ option {
 }
 
 h1, h2, h3 {
+    color: #fff;
     margin: auto;
     width: 50%;
     text-align: center;
 }
 
 h2, h3 {
-    color: rgba(0, 0, 0, .6);
     font-weight: 500;
-    margin-top: 10px;
     margin-bottom: 50px;
     width: auto;
 }
 
+h1 {
+    margin-bottom: 40px;
+}
+
 h3 {
-    margin-top: -30px !important;
+    margin-top: -30px;
+}
+
+button {
+    background-color: #570094;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 2rem;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+    padding: 2px;
+    border: none;
+}
+
+button:active {
+    transform: scale(.97);
+    outline: none;
+}
+
+button:focus {
+    outline: none;
 }
 
 #mph {
@@ -47,6 +76,7 @@ h3 {
 }*/
 
 .label {
+    color: #fff;
     font-size: 1.5rem;
 }
 
