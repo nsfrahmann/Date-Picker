@@ -98,6 +98,7 @@
     <Content Include="css\main.css" />
     <Content Include="img\delorean.gif" />
     <Content Include="img\futurelandscape.jpg" />
+    <Content Include="img\readmepic.png" />
     <Content Include="img\wizardfav.ico" />
     <Content Include="js\app.js" />
     <Content Include="index.html" />
