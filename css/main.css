@@ -37,8 +37,25 @@ h1 {
 
 @media only screen and (max-width: 600px) {
     h1 {
-        margin-top: 100px;
+        margin-top: 50px;
     }
+    select, input {
+        font-size: 1rem;
+        max-width: 150px;
+        max-height: 40px;
+    }
+
+    option {
+        font-size: .75rem;
+    }
+
+    .label {
+        font-size: 1rem;
+    }
+
+    .select-date, .button-group {
+    width: 82% !important;
+}
 }
 
 
@@ -127,7 +144,6 @@ button:focus {
     grid-column-end: 1;
     grid-row-start: 2;
     margin-top: -15px;
-    font-size: 1.75rem;
     font-weight: 700;
 }
 
