@@ -98,13 +98,7 @@
     <Content Include="css\main.css" />
     <Content Include="img\delorean.gif" />
     <Content Include="img\futurelandscape.jpg" />
-    <Content Include="img\futurelandscape.svg" />
-    <Content Include="img\futuretest.jpg" />
-    <Content Include="img\time.jpg" />
-    <Content Include="img\time.svg" />
-    <Content Include="img\universe.jpg" />
     <Content Include="img\wizardfav.ico" />
-    <Content Include="img\wizardfav.svg" />
     <Content Include="js\app.js" />
     <Content Include="index.html" />
     <Content Include="Web.config" />
