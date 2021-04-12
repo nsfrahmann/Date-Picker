@@ -5,13 +5,14 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <title>Date Wizard</title>
 
-    <link href="img/wizardfav.ico" rel="shortcut icon" />
+    <!--Styles-->
+    <link href="../img/wizardfav.ico" rel="shortcut icon" />
     <link href="../css/main.css" rel="stylesheet" />
-
+    <!--Styles End-->
 </head>
 <body>
-
     <h1>Date Wizard</h1>
+    <!--First Date Field-->
     <div class="select-date">
         <div class="label label-date">Start Date</div>
         <div class="empty"></div>
@@ -35,7 +36,9 @@
         <div class="label label-year">Year</div>
         <input onchange="loading(this)" id="select-year-1" maxlength="4" />
     </div>
+    <!--First Date Field End-->
 
+    <!--Second Date Field-->
     <div class="select-date">
         <div class="label label-date">Target Date</div>
         <div class="empty"></div>
@@ -59,20 +62,26 @@
         <div class="label label-year">Year</div>
         <input onchange="loading(this)" id="select-year-2" maxlength="4" />
     </div>
+    <!--Second Date Field End-->
+
+    <!--Buttons-->
     <div class="button-group">
         <button onclick="getResult(this)" value="seconds" id="seconds">Seconds</button>
         <button onclick="getResult(this)" value="minutes" id="minutes">Minutes</button>
         <button onclick="getResult(this)" value="hours" id="hours">Hours</button>
         <button onclick="getResult(this)" value="days" id="days">Days</button>
     </div>
+    <!--Buttons End-->
+    <!--Result Block-->
     <h2 id="result"></h2>
     <h2 id="Marty"></h2>
     <h3 id="mph"></h3>
+    <!--Result Block End-->
 
-
-
+    <!--Scripts-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
     <script src="../js/app.js"></script>
+    <!--Scripts End-->
 
 </body>
 </html>

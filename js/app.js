@@ -1,34 +1,48 @@
-﻿let currentMonth = moment().format('MM');
+﻿
+//Current values for page load
+let currentMonth = moment().format('MM');
 let currentDay = moment().format('DD');
 let currentYear = moment().year();
-let month1
-let month2
-let day1
-let day2
-let year1
-let year2
 
-let dayArray1
-let dayArray2
-let i
-let number
+//Input values
+let month1;
+let month2;
+let day1;
+let day2;
+let year1;
+let year2;
 
-let date1
-let date2
+//Day option arrays for current month
+let dayArray1;
+let dayArray2;
 
-let result
-let response
+//Date in MM/DD/YYYY format
+let date1;
+let date2;
 
-let monthSelect1 = document.getElementById('select-month-1')
-let monthSelect2 = document.getElementById('select-month-2')
+//Result
+let result;
+let response;
 
+//Miscellaneous for clean console
+let i;
+let number;
+
+//Input elements
+let monthSelect1 = document.getElementById('select-month-1');
+let monthSelect2 = document.getElementById('select-month-2');
+let yearSelect1 = document.getElementById('select-year-1');
+let yearSelect2 = document.getElementById('select-year-2');
+let daySelect1 = document.getElementById('select-day-1');
+let daySelect2 = document.getElementById('select-day-2');
+
+//Variable declaration to get and persist time format
 if (localStorage.getItem('format') != null) {
-    var format = document.querySelector(`#${localStorage.getItem('format')}`)
+    var format = document.querySelector(`#${localStorage.getItem('format')}`);
 }
 else {
-    format = document.getElementById('days')
+    format = document.getElementById('days');
 }
-
 
 window.onload = () => {
     getDayOptions1();
@@ -44,20 +58,22 @@ window.onchange = () => {
     loading();
 
     //Uncomment if loading is annoying
+
     //getResult(format);
     //persistData();
 }
 
+//Day option switching
 monthSelect1.addEventListener('click', getDayOptions1)
 monthSelect2.addEventListener('click', getDayOptions2)
 
 //This is to handle the leap year case
-document.getElementById('select-year-1').addEventListener('change', getDayOptions1)
-document.getElementById('select-year-2').addEventListener('change', getDayOptions2)
+yearSelect1.addEventListener('change', getDayOptions1)
+yearSelect2.addEventListener('change', getDayOptions2)
 
-//regular expression preventing non-numeric input
-document.getElementById('select-year-1').addEventListener('keydown', regEx)
-document.getElementById('select-year-2').addEventListener('keydown', regEx)
+//Regular expression preventing non-numeric input
+yearSelect1.addEventListener('keydown', regEx)
+yearSelect2.addEventListener('keydown', regEx)
 
 function regEx (evt) {
     if (evt.which < 48 && evt.which != 8 || evt.which > 57) {
@@ -65,6 +81,7 @@ function regEx (evt) {
     }
 }
 
+//Commas to displayed values
 function addCommas() {
     
     if (result === null) {
@@ -89,8 +106,9 @@ function addCommas() {
     return result;
 }
 
+//Get current month or last selected month on page load
 function getMonth1() {
-    let monthArray = document.getElementById('select-month-1').children;
+    let monthArray = monthSelect1.children;
 
     for (let i = 0; i < monthArray.length; i++) {
         if (localStorage.getItem('first-date') != null) {
@@ -111,7 +129,7 @@ function getMonth1() {
 }
 
 function getMonth2() {
-    let monthArray = document.getElementById('select-month-2').children;
+    let monthArray = monthSelect2.children;
     for (let i = 0; i < monthArray.length; i++) {
         if (localStorage.getItem('second-date') != null) {
             let parts = localStorage.getItem('second-date').split('/');
@@ -130,40 +148,42 @@ function getMonth2() {
     }
 }
 
+//Get current year or last selected month on page load
 function getYear1() {
     if (localStorage.getItem('first-date') != null) {
         let parts = localStorage.getItem('first-date').split('/');
-        document.getElementById('select-year-1').setAttribute('value', parts[2]);
+        yearSelect1.setAttribute('value', parts[2]);
     }
     else {
-        document.getElementById('select-year-1').setAttribute('value', currentYear);
+        yearSelect1.setAttribute('value', currentYear);
     }
 }
 
 function getYear2() {
     if (localStorage.getItem('second-date') != null) {
         let parts = localStorage.getItem('second-date').split('/');
-        document.getElementById('select-year-2').setAttribute('value', parts[2]);
+        yearSelect2.setAttribute('value', parts[2]);
     }
     else {
-        document.getElementById('select-year-2').setAttribute('value', currentYear);
+        yearSelect2.setAttribute('value', currentYear);
     }
 }
 
+//Get current day or last selected day on page load
 function getDayOptions1() {
 
-    let monthInput1 = document.getElementById('select-month-1').value;
-    let yearInput1 = document.getElementById('select-year-1').value;
+    let monthInput1 = monthSelect1.value;
+    let yearInput1 = yearSelect1.value;
 
-    dayArray1 = Array.from(Array(moment(`${yearInput1}-${monthInput1}`).daysInMonth()), (_, i) => i + 1)
+    dayArray1 = Array.from(Array(moment(`${yearInput1}-${monthInput1}`).daysInMonth()), (_, i) => i + 1);
 
-    document.getElementById('select-day-1').innerHTML = '';
+    daySelect1.innerHTML = '';
 
     for (let i = 0; i < dayArray1.length; i++) {
-        document.getElementById('select-day-1').innerHTML += `<option value="${dayArray1[i]}">${dayArray1[i]}</option>`;
+        daySelect1.innerHTML += `<option value="${dayArray1[i]}">${dayArray1[i]}</option>`;
     }
 
-    let dayOptionArray1 = document.getElementById('select-day-1').children;
+    let dayOptionArray1 = daySelect1.children;
 
     for (let i = 0; i < dayOptionArray1.length; i++) {
         if (localStorage.getItem('first-date') != null) {
@@ -185,18 +205,18 @@ function getDayOptions1() {
 
 function getDayOptions2() {
 
-    let monthInput2 = document.getElementById('select-month-2').value;
-    let yearInput2 = document.getElementById('select-year-2').value;
+    let monthInput2 = monthSelect2.value;
+    let yearInput2 = yearSelect2.value;
 
-    dayArray2 = Array.from(Array(moment(`${yearInput2}-${monthInput2}`).daysInMonth()), (_, i) => i + 1)
+    dayArray2 = Array.from(Array(moment(`${yearInput2}-${monthInput2}`).daysInMonth()), (_, i) => i + 1);
 
-    document.getElementById('select-day-2').innerHTML = '';
+    daySelect2.innerHTML = '';
 
     for (let i = 0; i < dayArray2.length; i++) {
-        document.getElementById('select-day-2').innerHTML += `<option value="${dayArray2[i]}">${dayArray2[i]}</option>`;
+        daySelect2.innerHTML += `<option value="${dayArray2[i]}">${dayArray2[i]}</option>`;
     }
 
-    let dayOptionArray2 = document.getElementById('select-day-2').children
+    let dayOptionArray2 = daySelect2.children;
 
     for (let i = 0; i < dayOptionArray2.length; i++) {
         if (localStorage.getItem('second-date') != null) {
@@ -216,33 +236,36 @@ function getDayOptions2() {
     }
 }
 
+//Spit out result and cache
 function getResult(format) {
 
-    month1 = document.getElementById('select-month-1').value;
-    day1 = document.getElementById('select-day-1').value;
-    year1 = document.getElementById('select-year-1').value;
+    month1 = monthSelect1.value;
+    day1 = daySelect1.value;
+    year1 = yearSelect1.value;
     date1 = moment(`${month1}/${day1}/${year1}`);
 
-    month2 = document.getElementById('select-month-2').value;
-    day2 = document.getElementById('select-day-2').value;
-    year2 = document.getElementById('select-year-2').value;
+    month2 = monthSelect2.value;
+    day2 = daySelect2.value;
+    year2 = yearSelect2.value;
     date2 = moment(`${month2}/${day2}/${year2}`);
 
-    if (format.value == 'days') {
-        result = moment(date2).diff(moment(date1), 'd');
-    }
-    else if (format.value == 'seconds') {
-        result = moment(date2).diff(moment(date1), 's');
-    }
-    else if (format.value == 'minutes') {
-        result = moment(date2).diff(moment(date1), 'm');
-    }
-    else if (format.value == 'hours') {
-        result = moment(date2).diff(moment(date1), 'h');
+    switch (true) {
+        case (format.value == 'days'):
+            result = moment(date2).diff(moment(date1), 'd');
+            break;
+        case (format.value == 'hours'):
+            result = moment(date2).diff(moment(date1), 'h');
+            break
+        case (format.value == 'minutes'):
+            result = moment(date2).diff(moment(date1), 'm');
+            break;
+        case (format.value == 'seconds'):
+            result = moment(date2).diff(moment(date1), 's');
+            break;
     }
 
-    let displayDate1 = moment(date1).format('MM/DD/YYYY')
-    let displayDate2 = moment(date2).format('MM/DD/YYYY')
+    let displayDate1 = moment(date1).format('MM/DD/YYYY');
+    let displayDate2 = moment(date2).format('MM/DD/YYYY');
 
     switch (true) {
         case (result == 0):
@@ -264,12 +287,14 @@ function getResult(format) {
     localStorage.setItem('format', format.value);
 }
 
+//Cache date for select fields
 function persistData() {
     localStorage.clear()
     localStorage.setItem('first-date', moment(date1).format('MM/DD/YYYY'));
     localStorage.setItem('second-date', moment(date2).format('MM/DD/YYYY'));
 }
 
+//Optional loader animation
 function loading() {
 
     getResult(format);
@@ -292,9 +317,11 @@ function loading() {
         document.getElementById('Marty').innerHTML = 'Marty, floor it!';
         document.getElementById('mph').outerHTML = '<h3 id="mph"></h3>';
 
-        var style = document.createElement('style');
-        style.type = 'text/css';
-        style.innerHTML = `#mph::after { background-image: url(/img/delorean.gif)\ ; \
+        if (i == 1) {
+            let style = document.createElement('style');
+            style.type = 'text/css';
+            style.setAttribute('id', 'load-gif');
+            style.innerHTML = `#mph::after { background-image: url(/img/delorean.gif)\ ; \
                                             transform: rotateY(180deg)\ ; \
                                             margin-top: -55px\ ; \
                                             margin-left: 70px\ ; \
@@ -304,9 +331,10 @@ function loading() {
                                             display: inline-block\ ; \
                                             background-size: 115px 115px\ ; \
                                             content: "" }`;
-        document.getElementsByTagName('head')[0].appendChild(style);
+            document.getElementsByTagName('head')[0].appendChild(style);
+        }
 
-        x = (setTimeout(() => {
+        (setTimeout(() => {
             document.getElementById('mph').innerHTML = num + ' ' + 'mph';
             num++;
             if (num == 88) {
@@ -323,6 +351,7 @@ function loading() {
                     document.getElementById('result').removeAttribute('class', 'hide');
                     document.getElementById('result').innerHTML = response;
                     document.getElementById('mph').innerHTML = '';
+                    document.getElementById('load-gif').remove();
                 }, 500)
             }
             
