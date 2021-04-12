@@ -9,6 +9,8 @@
 5. Responsive across devices
 6. No bootstrap or jQuery!
 
-### This was a very fun project to work on and I learned a lot strictly working with Vanilla Javascript. Also hats off to the well-esteemed moment.js library, I loved using it! Here's the link to the live site: [Date-Wizard](https://date-wizard.netlify.app).
+### This was a very fun project to work on and I learned a lot strictly working with Vanilla Javascript. Also hats off to the well-esteemed moment.js library, I loved using it!
+
+### Here's the link to the live site: [Date Wizard](https://date-wizard.netlify.app).
 
 ![Screenshot](https://github.com/nsfrahmann/Date-Picker/blob/main/img/readmepic.png)
